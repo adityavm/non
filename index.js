@@ -57,7 +57,7 @@ const validateObject = (cmp, json) => {
         ) {
           throw new Error(`'${prop}' is not number[]`);
         }
-        return true;
+        continue;
       }
       // Final
       if (typeof json[prop] !== cmp[cmpProp]) {
