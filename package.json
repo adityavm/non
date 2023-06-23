@@ -1,0 +1,29 @@
+{
+  "name": "nons",
+  "version": "0.1.0",
+  "description": "like zod, but simpler, lightweight scheme validation",
+  "main": "index.js",
+  "scripts": {
+    "test": "uvu"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/adityavm/non.git"
+  },
+  "keywords": [
+    "js",
+    "ts",
+    "validator",
+    "schema"
+  ],
+  "author": "Aditya Mukherjee <github@adityamukherjee.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/adityavm/non/issues"
+  },
+  "homepage": "https://github.com/adityavm/non#readme",
+  "dependencies": {
+    "prettier": "^2.8.8",
+    "uvu": "^0.5.6"
+  }
+}
