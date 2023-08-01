@@ -23,7 +23,7 @@ const validateObject = (cmp, json) => {
       return true;
     }
     // If nested
-    if (typeof cmp[cmpProp] === "object") {
+    if (typeof cmp[cmpProp] === "object" && !Array.isArray(cmp[cmpProp])) {
       try {
         const result = validateObject(cmp[cmpProp], json[prop]);
         if (!result) {
@@ -35,13 +35,8 @@ const validateObject = (cmp, json) => {
         );
       }
     } else {
-      if (!isValidType(cmp[cmpProp])) {
-        throw new Error(
-          `Unknown type for '${prop}', should be one of ${Object.values(types)}`
-        );
-      }
       // Should be array type
-      if (cmp[cmpProp].match(/\[\]/)) {
+      if (Array.isArray(cmp[cmpProp])) {
         if (!Array.isArray(json[prop])) {
           throw new Error(`'${prop}' is not array`);
         }
@@ -49,20 +44,40 @@ const validateObject = (cmp, json) => {
           cmp[cmpProp] === types.stringArray &&
           !json[prop].every(e => typeof e === types.string)
         ) {
-          throw new Error(`'${prop}' is not string[]`);
+          throw new Error(`'${prop}' is not ["string"]`);
         }
         if (
           cmp[cmpProp] === types.numberArray &&
           !json[prop].every(e => typeof e === types.number)
         ) {
-          throw new Error(`'${prop}' is not number[]`);
+          throw new Error(`'${prop}' is not ["number"]`);
+        }
+        if (cmp[cmpProp] === types.objectArray) {
+          if (
+            cmp[cmpProp][0] === "object" &&
+            !json[prop].every(e => typeof e === types.object)
+          ) {
+            throw new Error(`'${prop}' is not ["object"]`);
+          }
+        }
+        if (cmp[cmpProp] !== "object" && typeof cmp[cmpProp][0] === "object") {
+          return json[prop].every(
+            obj => validateObject(cmp[cmpProp][0], obj) === true
+          );
         }
         continue;
+      }
+      if (!isValidType(cmp[cmpProp])) {
+        throw new Error(
+          `Unknown type for '${prop}', should be one of ${Object.values(types)}`
+        );
       }
       // Final
       if (typeof json[prop] !== cmp[cmpProp]) {
         throw new Error(
-          `'${prop}' expected to be ${cmp[cmpProp]}, got ${typeof json[prop]}`
+          `'${prop}' expected to be ${cmp[cmpProp]}, got ${typeof json[
+            prop
+          ]} with value "${JSON.stringify(json[prop])}"`
         );
       }
     }

@@ -1,8 +1,10 @@
 module.exports = {
   string: "string",
   number: "number",
-  stringArray: "string[]",
-  numberArray: "number[]",
+  object: "object",
+  stringArray: ["string"],
+  numberArray: ["number"],
   any: "any",
-  array: "[]",
+  array: [],
+  objectArray: ["object"],
 };

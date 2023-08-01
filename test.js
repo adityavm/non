@@ -206,22 +206,22 @@ test("it should validate activity_statement object", () => {
     validate(
       {
         statement: {
-          currency: "string",
-          account_number: "string",
-          start_at: "number",
-          end_at: "number",
-          total_spent: "number",
-          net_result_month: "number",
-          opening_balance: "number",
-          deposits: "number",
-          withdrawals: "number",
-          adjustments: "number",
-          closing_balance: "number",
-          net_result: "number",
-          six_months: "number[]",
-          last_6_months: "number",
-          year_to_year: "number",
-          "transactions_list?": "any[]",
+          currency: types.string,
+          account_number: types.string,
+          start_at: types.number,
+          end_at: types.number,
+          total_spent: types.number,
+          net_result_month: types.number,
+          opening_balance: types.number,
+          deposits: types.number,
+          withdrawals: types.number,
+          adjustments: types.number,
+          closing_balance: types.number,
+          net_result: types.number,
+          six_months: types.numberArray,
+          last_6_months: types.number,
+          year_to_year: types.number,
+          "transactions_list?": [],
         },
       },
       {
@@ -241,8 +241,51 @@ test("it should validate activity_statement object", () => {
           six_months: [1, 2, 3],
           last_6_months: 10,
           year_to_year: 10,
-          "transactions_list?": "any[]",
+          "transactions_list?": [],
         },
+      }
+    ),
+    true
+  );
+});
+
+test("should validate arbitrary array types", () => {
+  assert.is(
+    validate(
+      {
+        arbi: {
+          a: types.string,
+          "b?": types.string,
+        },
+        test: [
+          {
+            a: types.string,
+            b: types.number,
+            c: [
+              {
+                d: types.string,
+              },
+            ],
+          },
+        ],
+      },
+      {
+        arbi: {
+          a: "arbi-abcd",
+        },
+        test: [
+          { a: "a-abcd", b: 1, c: [{ d: "d-abcd" }] },
+          { a: "a-efgh", b: 2, c: [{ d: "d-efgh" }] },
+          {
+            a: "a-ijkl",
+            b: 3,
+            c: [
+              {
+                d: "d-ijkl",
+              },
+            ],
+          },
+        ],
       }
     ),
     true
