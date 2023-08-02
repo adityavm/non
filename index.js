@@ -11,16 +11,18 @@ const validateObject = (cmp, json) => {
     if (cmp[cmpProp] === types.any) {
       return true;
     }
-    if (json[prop] === undefined) {
+    if (json[prop] === undefined || json[prop] === null) {
       if (!cmpProp.endsWith("?")) {
-        throw new Error(`'${prop}' was undefined without being optional`);
+        throw new Error(
+          `'${prop}' was undefined / null without being optional`
+        );
       }
       if (typeof cmp[cmpProp] !== "object" && !isValidType(cmp[cmpProp])) {
         throw new Error(
           `Unknown type for '${prop}', should be one of ${Object.values(types)}`
         );
       }
-      return true;
+      continue;
     }
     // If nested
     if (typeof cmp[cmpProp] === "object" && !Array.isArray(cmp[cmpProp])) {
