@@ -1,6 +1,6 @@
 {
   "name": "nons",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "like zod, but simpler, lightweight scheme validation",
   "main": "index.js",
   "scripts": {
