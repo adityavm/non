@@ -4,7 +4,8 @@
   "description": "like zod, but simpler, lightweight scheme validation",
   "main": "index.js",
   "scripts": {
-    "test": "uvu"
+    "test": "uvu",
+    "watch": "watchlist index.js test.js -- npm test"
   },
   "repository": {
     "type": "git",
@@ -23,7 +24,10 @@
   },
   "homepage": "https://github.com/adityavm/non#readme",
   "dependencies": {
-    "prettier": "^2.8.8",
     "uvu": "^0.5.6"
+  },
+  "devDependencies": {
+    "prettier": "^3.0.2",
+    "watchlist": "^0.3.1"
   }
 }
