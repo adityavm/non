@@ -7,4 +7,9 @@ module.exports = {
   any: "any",
   array: [],
   objectArray: ["object"],
+  optional: "?",
+  oneOf: "%",
+  null: null,
+  asOneOf: key => key + "%",
+  asOptional: key => key + "?",
 };
